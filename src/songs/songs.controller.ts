@@ -24,8 +24,10 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { UpdateSongDTO } from './dto/update-song-dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtArtistGuard } from 'src/auth/jwt-guard/artists-jwt-guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller({ path: 'songs', scope: Scope.REQUEST })
+@ApiTags('songs')
 export class SongsController {
   constructor(
     private songsService: SongsService,
@@ -36,6 +38,7 @@ export class SongsController {
   }
 
   @Post()
+  @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtArtistGuard)
   create(@Body() createSongDTO: CreateSongDTO, @Request() req): Promise<Song> {
     console.log('req.user: ', req.user);

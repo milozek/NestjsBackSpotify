@@ -16,7 +16,7 @@ class EnvironmentVariables {
   PORT: number;
 
   @IsString()
-  SECRET: string;
+  JWT_SECRET: string;
 
   @IsNumber()
   DB_PORT: number;
