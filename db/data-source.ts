@@ -8,6 +8,7 @@ import { Playlist } from 'src/playlists/playlists.entity';
 import { Song } from 'src/songs/songs.entity';
 import { User } from 'src/users/users.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import 'dotenv/config';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
