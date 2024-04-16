@@ -6,12 +6,12 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserDTO } from 'src/users/dto/create-user-dto';
+import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 import { User } from 'src/users/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDTO } from './dto/login.dto';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-guard/jwt-guard';
+import { JwtAuthGuard } from './jwt-guard/jwt.guard';
 import { Enable2FAType } from './types/auth.types';
 import { ValidateTokenDTO } from './dto/validate-token.dto';
 import { UpdateResult } from 'typeorm';
@@ -38,12 +38,12 @@ export class AuthController {
     return this.usersService.create(userDTO);
   }
 
+  @Post('login')
   @ApiOperation({ summary: 'Login user' })
   @ApiResponse({
     status: 200,
     description: 'It will give you the access_token in the response',
   })
-  @Post('login')
   login(
     @Body()
     loginDTO: LoginDTO,

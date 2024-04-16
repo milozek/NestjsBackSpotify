@@ -17,14 +17,19 @@ import {
   Request,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
-import { CreateSongDTO } from './dto/create-song-dto';
+import { CreateSongDTO } from './dto/create-song.dto';
 import { Connection } from 'src/common/constants/connection';
 import { Song } from './songs.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
-import { UpdateSongDTO } from './dto/update-song-dto';
+import { UpdateSongDTO } from './dto/update-song.dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { JwtArtistGuard } from 'src/auth/jwt-guard/artists-jwt-guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtArtistGuard } from 'src/auth/jwt-guard/artists-jwt.guard';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller({ path: 'songs', scope: Scope.REQUEST })
 @ApiTags('songs')
@@ -40,6 +45,11 @@ export class SongsController {
   @Post()
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtArtistGuard)
+  @ApiOperation({ summary: 'Upload new song' })
+  @ApiResponse({
+    status: 201,
+    description: 'It will return the song in the response',
+  })
   create(@Body() createSongDTO: CreateSongDTO, @Request() req): Promise<Song> {
     console.log('req.user: ', req.user);
     return this.songsService.create(createSongDTO);
